@@ -27,8 +27,8 @@ pub struct UserAccount {
 #[derive(Default)]
 pub struct BookingAccount {
     pub authority  : Pubkey,
-    pub idx        : u8,
     pub date       : String,
+    pub idx        : u8,
     pub address    : String,
     pub longtitude : String,
     pub latitude   : String,

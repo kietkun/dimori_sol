@@ -3,18 +3,15 @@ import { PencilIcon, TrashIcon, HeartIcon } from "@heroicons/react/24/outline";
 
 function ListingItem({
   idx,
-  publickey,
+  publicKey,
   connected,
   showReservedListing,
   location,
   country,
   date,
-  distance,
   price,
-  rating,
   image,
   isReserved,
-  reservation,
   removeListing,
   toggleEditListingModal,
   toggleReserveListingModal,
@@ -26,7 +23,7 @@ function ListingItem({
 
   const handleReserve = () => {
     if (isReserved) {
-      unreserveListing(publickey, idx);
+      unreserveListing(publicKey, idx);
       return;
     }
 
@@ -44,7 +41,7 @@ function ListingItem({
               className="w-6 h-6 text-white opacity-80"
             />
             <TrashIcon
-              onClick={() => removeListing(publickey, idx)}
+              onClick={() => removeListing(publicKey, idx)}
               className="w-6 h-6 text-white opacity-80"
             />
             <HeartIcon
