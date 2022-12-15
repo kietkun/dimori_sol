@@ -52,7 +52,7 @@ export default function ReserveListingModal({ reserveListing,currentEditListing,
                                 </Dialog.Title>
 
                                 <div className="mt-2">
-                                    <DateRangePicker minDate={new Date()} rangeColors={['#FD5B61']} ranges={[selectionRange]} onChange={handleSelect} />
+                                    <DateRangePicker minDate={new Date()} rangeColors={['#00B1FF']} ranges={[selectionRange]} onChange={handleSelect} />
 
                                     <div className="mt-4 flex justify-end">
                                         <button onClick={onConfirm} type="button" className="border rounded-lg px-4 py-2 text-sm font-medium">

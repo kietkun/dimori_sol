@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }) {
     return (
         <>
             <Head>
-                <title>Airbnb Clone</title>
+                <title>dimori</title>
             </Head>
             <WalletConnectionProvider>
                 <Component {...pageProps} />

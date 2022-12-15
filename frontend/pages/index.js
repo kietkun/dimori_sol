@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import SearchBar from '../components/search'
+import About from '../components/about'
 import FilterMenu from '../components/FilterMenu'
 import Listings from '../components/Listing/Listings'
 import { useMemo, useState,useEffect } from 'react'
@@ -68,16 +70,16 @@ export default function Home() {
     return (
         <div>
             <Head>
-                <title>Dimori - (Airbnb Clone)</title>
+                <title>dimori</title>
             </Head>
 
             <Header connected={connected} publicKey={publicKey} initializeUser = {initializeUser} initialized = {initialized} transactionPending = {transactionPending}/>
 
             <main className="pt-10 pb-20">
-                <FilterMenu />
+                {/* <FilterMenu /> */}
 
                 {connected && (
-                    <div className="px-20 pb-10 flex justify-end space-x-4">
+                    <div className="px-20 py-10 flex justify-end space-x-4">
                         <button onClick={toggleShowReservedListing} className="border rounded-lg p-4 text-xs font-medium">
                             {showReservedListing ? 'Reserved' : 'All'}
                         </button>
@@ -86,8 +88,10 @@ export default function Home() {
                         </button>
                     </div>
                 )}
-                    <Listings connected={connected} showReservedListing={showReservedListing} listings={displayListings} toggleEditListingModal={toggleEditListingModal} toggleReserveListingModal={toggleReserveListingModal} removeListing={removeHome} unreserveListing={cancelBooking} />
+                <Listings connected={connected} showReservedListing={showReservedListing} listings={displayListings} toggleEditListingModal={toggleEditListingModal} toggleReserveListingModal={toggleReserveListingModal} removeListing={removeHome} unreserveListing={cancelBooking} />
 
+                <About />
+                
                 <AddListingModal addHome={addHome} addListingModalOpen={addListingModalOpen} setAddListingModalOpen={setAddListingModalOpen} />
                 <EditListingModal editListing={updateHome} currentEditListing={currentEditListing} editListingModalOpen={editListingModalOpen} setEditListingModalOpen={setEditListingModalOpen} />
                 <ReserveListingModal reserveListing={bookHome} currentEditListing={currentEditListing} reserveListingModalOpen={reserveListingModalOpen} setReserveListingModalOpen={setReserveListingModalOpen} />

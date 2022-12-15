@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+    scroll-behavior: smooth;
+}
+
 .phantom-button:hover {
     background-color: rgb(243 244 246) !important;
+}
+
+.landingImage {
+    width: 100vw;
+    height: 70vh;
+    position: relative;
+    background-size: cover;
+    background-image: url("/bg2.png");
 }
