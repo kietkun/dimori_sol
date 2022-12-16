@@ -5,7 +5,7 @@ import 'react-date-range/dist/styles.css' // main style file
 import 'react-date-range/dist/theme/default.css' // theme css file
 import { format } from 'date-fns'
 
-export default function ReserveListingModal({ reserveListing, reserveListingModalOpen, setReserveListingModalOpen }) {
+export default function ReserveListingModal({ reserveListing,currentEditListing, reserveListingModalOpen, setReserveListingModalOpen }) {
     const [startDate, setStartDate] = useState(new Date())
     const [endDate, setEndDate] = useState(new Date())
 
@@ -27,7 +27,11 @@ export default function ReserveListingModal({ reserveListing, reserveListingModa
     const onConfirm = (e) => {
         e.preventDefault()
 
-        reserveListing({ startDate, endDate })
+        const formattedStartDate = format(new Date(startDate), 'MMM d')
+        const formattedEndDate = format(new Date(endDate), 'MMM d')
+        const range = `${formattedStartDate} - ${formattedEndDate}`
+
+        reserveListing(currentEditListing.account,range)
 
         closeModal()
     }
@@ -48,7 +52,7 @@ export default function ReserveListingModal({ reserveListing, reserveListingModa
                                 </Dialog.Title>
 
                                 <div className="mt-2">
-                                    <DateRangePicker minDate={new Date()} rangeColors={['#00B1FF']} ranges={[selectionRange]} onChange={handleSelect} />
+                                    <DateRangePicker minDate={new Date()} rangeColors={['#FD5B61']} ranges={[selectionRange]} onChange={handleSelect} />
 
                                     <div className="mt-4 flex justify-end">
                                         <button onClick={onConfirm} type="button" className="border rounded-lg px-4 py-2 text-sm font-medium">

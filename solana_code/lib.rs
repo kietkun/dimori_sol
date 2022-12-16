@@ -1,48 +1,48 @@
 use anchor_lang::prelude::*;
 pub mod constant;
 pub mod states;
-use crate::{ constant::*, states::* };
+use crate::{constant::*, states::*};
 
-declare_id!("J5yzCZrNZJR6K5FUwwZ2SzjTvg8DzomcYqcaZJm27Y6v");
+declare_id!("B6u1AqDTyvWVe1EZjrJcnKpVPFu6B1urTzm4gDPEKRh9");
 
 #[program]
 pub mod dimori {
     use super::*;
 
-pub fn initialize_user(ctx: Context<InitializeUser>) -> Result < () > {
-    // Initialize user profile with default data
+    pub fn initialize_user(ctx: Context<InitializeUser>) -> Result<()> {
+        // Initialize user profile with default data
 
-    let user_profile       = &mut ctx.accounts.user_profile;
-    user_profile.authority = ctx.accounts.authority.key();
-    user_profile.last      = 0;
-    user_profile.count     = 0;
+        let user_profile = &mut ctx.accounts.user_profile;
+        user_profile.authority = ctx.accounts.authority.key();
+        user_profile.last = 0;
+        user_profile.count = 0;
 
-    Ok(())
+        Ok(())
     }
 
-pub fn add_home(
-        ctx       : Context<Add>,
-        address   : String,
+    pub fn add_home(
+        ctx: Context<Add>,
+        address: String,
         longtitude: String,
-        latitude  : String,
-        location  : String,
+        latitude: String,
+        location: String,
         image_path: String,
-        theme     : String,
-        price     : String
-    ) -> Result < () > {
+        theme: String,
+        price: String,
+    ) -> Result<()> {
         let user_account = &mut ctx.accounts.user_account;
-        let user_profile   = &mut ctx.accounts.user_profile;
+        let user_profile = &mut ctx.accounts.user_profile;
 
         // Fill contents with argument
-        user_account.authority  = ctx.accounts.authority.key();
-        user_account.idx        = user_profile.last;
-        user_account.address    = address;
+        user_account.authority = ctx.accounts.authority.key();
+        user_account.idx = user_profile.last;
+        user_account.address = address;
         user_account.longtitude = longtitude;
-        user_account.latitude   = latitude;
-        user_account.location   = location;
+        user_account.latitude = latitude;
+        user_account.location = location;
         user_account.image_path = image_path;
-        user_account.theme      = theme;
-        user_account.price      = price;
+        user_account.theme = theme;
+        user_account.price = price;
         user_account.isReserved = false;
 
         // Increase airbnb idx for PDA
@@ -54,35 +54,34 @@ pub fn add_home(
         Ok(())
     }
 
-pub fn update_home(
-        ctx       : Context<Update>,
+    pub fn update_home(
+        ctx: Context<Update>,
         index: u8,
-        address   : String,
+        address: String,
         longtitude: String,
-        latitude  : String,
-        location  : String,
+        latitude: String,
+        location: String,
         image_path: String,
-        theme     : String,
-        price     : String
-    ) -> Result < () > {
-    let user_account = &mut ctx.accounts.user_account;
+        theme: String,
+        price: String,
+    ) -> Result<()> {
+        let user_account = &mut ctx.accounts.user_account;
 
         // Mark todo
-        user_account.address    = address;
+        user_account.address = address;
         user_account.longtitude = longtitude;
-        user_account.latitude   = latitude;
-        user_account.location   = location;
+        user_account.latitude = latitude;
+        user_account.location = location;
         user_account.image_path = image_path;
-        user_account.price      = price;
-        user_account.theme      = theme;
-        user_account.price      = price;
+        user_account.theme = theme;
+        user_account.price = price;
         Ok(())
     }
 
-pub fn remove_home(ctx: Context<Remove>, _index: u8) -> Result < () > {
-    // Decreate total airbnb count
-        let user_profile          = &mut ctx.accounts.user_profile;
-        user_profile.count        = user_profile.count.checked_sub(1).unwrap();
+    pub fn remove_home(ctx: Context<Remove>, _index: u8) -> Result<()> {
+        // Decreate total airbnb count
+        let user_profile = &mut ctx.accounts.user_profile;
+        user_profile.count = user_profile.count.checked_sub(1).unwrap();
 
         // No need to decrease last airbnb idx
 
@@ -91,38 +90,38 @@ pub fn remove_home(ctx: Context<Remove>, _index: u8) -> Result < () > {
         Ok(())
     }
 
-// Need a function that reserves an Airbnb
-pub fn book_home(
-        ctx        : Context<Book>,
-        idx        : u8,
-        date       : String,
-        address    : String,
-        longtitude : String,
-        latitude   : String,
-        location   : String,
-        image_path : String,
-        theme      : String,
-        price      : String
-    ) -> Result < () > {
+    // Need a function that reserves an Airbnb
+    pub fn book_home(
+        ctx: Context<Book>,
+        idx: u8,
+        date: String,
+        address: String,
+        longtitude: String,
+        latitude: String,
+        location: String,
+        image_path: String,
+        theme: String,
+        price: String,
+    ) -> Result<()> {
         let booking_account = &mut ctx.accounts.booking_account;
 
         // // Fill contents with argument
-        booking_account.authority  = ctx.accounts.authority.key();
-        booking_account.idx        = idx;
-        booking_account.date       = date;
-        booking_account.address    = address;
+        booking_account.authority = ctx.accounts.authority.key();
+        booking_account.idx = idx;
+        booking_account.date = date;
+        booking_account.address = address;
         booking_account.longtitude = longtitude;
-        booking_account.latitude   = latitude;
-        booking_account.location   = location;
+        booking_account.latitude = latitude;
+        booking_account.location = location;
         booking_account.image_path = image_path;
-        booking_account.theme      = theme;
-        booking_account.price      = price;
+        booking_account.theme = theme;
+        booking_account.price = price;
         booking_account.isReserved = true;
 
         Ok(())
     }
 
-pub fn cancel_booking(ctx: Context<CancelBook>, _booking_idx: u8) -> Result < () > {
+    pub fn cancel_booking(ctx: Context<CancelBook>, _booking_idx: u8) -> Result<()> {
         // Decreate total airbnb count
         let user_profile = &mut ctx.accounts.user_profile;
 
@@ -142,9 +141,9 @@ pub struct InitializeUser<'info> {
         payer = authority,
         space = 8 + std::mem::size_of::<UserProfile>()
     )]
-    pub user_profile: Box < Account < 'info, UserProfile>>,
+    pub user_profile: Box<Account<'info, UserProfile>>,
 
-    pub system_program: Program < 'info, System>,
+    pub system_program: Program<'info, System>,
 }
 
 #[derive(Accounts)]
@@ -156,7 +155,7 @@ pub struct Add<'info> {
         bump,
         has_one = authority,
     )]
-    pub user_profile: Box < Account < 'info, UserProfile>>,
+    pub user_profile: Box<Account<'info, UserProfile>>,
 
     #[account(
         init,
@@ -165,12 +164,12 @@ pub struct Add<'info> {
         payer = authority,
         space = 2865 + 8
     )]
-    pub user_account: Box < Account < 'info, UserAccount>>,
+    pub user_account: Box<Account<'info, UserAccount>>,
 
     #[account(mut)]
-    pub authority: Signer < 'info>,
+    pub authority: Signer<'info>,
 
-    pub system_program: Program < 'info, System>,
+    pub system_program: Program<'info, System>,
 }
 
 #[derive(Accounts)]
@@ -182,7 +181,7 @@ pub struct Update<'info> {
         bump,
         has_one = authority,
     )]
-    pub user_profile: Box < Account < 'info, UserProfile>>,
+    pub user_profile: Box<Account<'info, UserProfile>>,
 
     #[account(
         mut,
@@ -190,12 +189,12 @@ pub struct Update<'info> {
         bump,
         has_one = authority,
     )]
-    pub user_account: Box < Account < 'info, UserAccount>>,
+    pub user_account: Box<Account<'info, UserAccount>>,
 
     #[account(mut)]
-    pub authority: Signer < 'info>,
+    pub authority: Signer<'info>,
 
-    pub system_program: Program < 'info, System>,
+    pub system_program: Program<'info, System>,
 }
 
 #[derive(Accounts)]
@@ -207,7 +206,7 @@ pub struct Remove<'info> {
         bump,
         has_one = authority,
     )]
-    pub user_profile: Box < Account < 'info, UserProfile>>,
+    pub user_profile: Box<Account<'info, UserProfile>>,
 
     #[account(
         mut,
@@ -216,12 +215,12 @@ pub struct Remove<'info> {
         bump,
         has_one = authority,
     )]
-    pub user_account: Box < Account < 'info, UserAccount>>,
+    pub user_account: Box<Account<'info, UserAccount>>,
 
     #[account(mut)]
-    pub authority: Signer < 'info>,
+    pub authority: Signer<'info>,
 
-    pub system_program: Program < 'info, System>,
+    pub system_program: Program<'info, System>,
 }
 
 #[derive(Accounts)]
@@ -233,7 +232,7 @@ pub struct Book<'info> {
         bump,
         has_one = authority,
     )]
-    pub user_profile: Box < Account < 'info, UserProfile>>,
+    pub user_profile: Box<Account<'info, UserProfile>>,
 
     #[account(
         init,
@@ -242,12 +241,12 @@ pub struct Book<'info> {
         payer = authority,
         space = 3125 + 8
     )]
-    pub booking_account: Box < Account < 'info, BookingAccount>>,
+    pub booking_account: Box<Account<'info, BookingAccount>>,
 
     #[account(mut)]
-    pub authority: Signer < 'info>,
+    pub authority: Signer<'info>,
 
-    pub system_program: Program < 'info, System>,
+    pub system_program: Program<'info, System>,
 }
 
 #[derive(Accounts)]
@@ -258,7 +257,7 @@ pub struct CancelBook<'info> {
         bump,
         has_one = authority,
     )]
-    pub user_profile: Box < Account < 'info, UserProfile>>,
+    pub user_profile: Box<Account<'info, UserProfile>>,
 
     #[account(
         mut,
@@ -267,10 +266,10 @@ pub struct CancelBook<'info> {
         bump,
         has_one = authority,
     )]
-    pub booking_account: Box < Account < 'info, BookingAccount>>,
+    pub booking_account: Box<Account<'info, BookingAccount>>,
 
     #[account(mut)]
-    pub authority: Signer < 'info>,
+    pub authority: Signer<'info>,
 
-    pub system_program: Program < 'info, System>,
+    pub system_program: Program<'info, System>,
 }

@@ -7,7 +7,7 @@ html {
 }
 
 .phantom-button:hover {
-    background-color: rgb(243 244 246) !important;
+    background-color: rgb(71 80 96) !important;
 }
 
 .landingImage {
@@ -15,5 +15,5 @@ html {
     height: 70vh;
     position: relative;
     background-size: cover;
-    background-image: url("/bg2.png");
+    background-image: url("/bg3.png");
 }

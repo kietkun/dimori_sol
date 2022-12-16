@@ -3,9 +3,9 @@ import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
 import Image from 'next/image'
 import { truncate } from '../utils/string'
 
-// import bgImage from '../public/background.png'
+import bgImage from '../public/background.png'
 
-function SearchBar({ connected, publicKey, initializeUser , initialized, transactionPending}) {
+function SearchBar() {
     return (
         <div className="landingImage pb-10 flex justify-between"
         // style={{width:"100vw",height:"100vh"}}
